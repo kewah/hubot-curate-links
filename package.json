@@ -1,0 +1,28 @@
+{
+  "name": "hubot-curate-links",
+  "version": "0.0.0",
+  "description": "A hubot script for Slack that saves links that are shared",
+  "keywords": [
+    "hubot",
+    "slack",
+    "links",
+    "url",
+    "share",
+    "curate"
+  ],
+  "main": "index.coffee",
+  "scripts": {},
+  "author": "Antoine Lehurt <code@kewah.com> (http://kewah.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "hubot": "2.13.2"
+  },
+  "dependencies": {
+    "async": "1.4.0",
+    "cron": "1.0.9",
+    "debug": "2.2.0",
+    "lodash": "3.10.0",
+    "mysql": "2.8.0",
+    "url-norm": "1.0.0"
+  }
+}
