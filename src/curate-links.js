@@ -185,10 +185,10 @@ module.exports = function(robot) {
 
       var upVoteValue = reactions.reduce(function(sum, reaction) {
         if (reaction.name === '+1') {
-          sum += 1;
+          sum += reaction.count;
         }
         if (reaction.name === '-1') {
-          sum -= 1;
+          sum -= reaction.count;
         }
 
         return sum;
