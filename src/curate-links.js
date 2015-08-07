@@ -22,10 +22,9 @@ var async = require('async');
 var urlNorm = require('url-norm');
 var CronJob = require('cron').CronJob;
 var adapterFactory = require('../lib/adapter-factory');
+var regexUrl = require('regex-url');
 
 var client = getDbClient();
-
-var URL_REGEX = /(https?:\/\/[^\s]+)/g;
 
 var SLACK_API_TOKEN = process.env.SLACK_API_TOKEN;
 if (!SLACK_API_TOKEN) {
@@ -60,7 +59,7 @@ module.exports = function(robot) {
   job.start();
 
   // Detect when a link is posted, save it into the robot brain.
-  robot.hear(URL_REGEX, function(res) {
+  robot.hear(regexUrl, function(res) {
     var url = urlNorm(res.match[0]);
     var msg = res.message;
 
