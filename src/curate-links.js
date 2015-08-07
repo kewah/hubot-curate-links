@@ -10,6 +10,7 @@
 //   PUBLISH_TIME
 //   MIN_POSITIVE_VOTES
 //   MYSQL_URL
+//   WARN_DUPLICATE_URL
 //
 // Commands:
 //   None
@@ -23,6 +24,7 @@ var urlNorm = require('url-norm');
 var CronJob = require('cron').CronJob;
 var adapterFactory = require('../lib/adapter-factory');
 var regexUrl = require('regex-url');
+var moment = require('moment');
 
 var client = getDbClient();
 
@@ -34,6 +36,7 @@ if (!SLACK_API_TOKEN) {
 var TIMEZONE = process.env.TIMEZONE || 'Europe/Stockholm';
 var PUBLISH_TIME = process.env.PUBLISH_TIME || '08:40';
 var MIN_POSITIVE_VOTES = process.env.MIN_POSITIVE_VOTES || 1;
+var WARN_DUPLICATE_URL = !!process.env.WARN_DUPLICATE_URL;
 
 function getDbClient() {
   if (process.env.MYSQL_URL) {
@@ -75,7 +78,20 @@ module.exports = function(robot) {
         return;
       }
 
-      if (data[0]) return;
+      var savedData = data[0];
+      if (savedData) {
+        if (WARN_DUPLICATE_URL) {
+          res.send(
+            'Oops <@' + res.message.user.name + '>, '
+            + ' this link has already been shared.\n'
+            + ':point_right: by <@' + savedData.userName + '> '
+            + 'on <#' + savedData.channelName + '> '
+            + moment(savedData.datetime).fromNow() + '.\n'
+            + '(The votes won\'t be taken into account.)'
+          );
+        }
+        return;
+      }
 
       var link = {
         url: url,
