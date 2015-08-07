@@ -25,7 +25,7 @@ var adapterFactory = require('../lib/adapter-factory');
 
 var client = getDbClient();
 
-var URL_REGEX = /(\w+)\:\/\/([^\/\:]*)(\:\d+)?(\/?.*)/i;
+var URL_REGEX = /(https?:\/\/[^\s]+)/g;
 
 var SLACK_API_TOKEN = process.env.SLACK_API_TOKEN;
 if (!SLACK_API_TOKEN) {
