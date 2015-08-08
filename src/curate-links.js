@@ -170,7 +170,7 @@ module.exports = function(robot) {
       }
 
       var approved = res.filter(function(v) {
-        return v.isApproved === 1;
+        return v && v.isApproved === 1;
       });
 
       callback(null, approved);
@@ -192,7 +192,18 @@ module.exports = function(robot) {
         return;
       }
 
-      var reactions = JSON.parse(body).message.reactions;
+      var body = JSON.parse(body);
+
+      // If the message has been removed by the user from Slack,
+      // we remove it as well from the DB.
+      if (body.error === 'message_not_found') {
+        debug(data.url, 'has been deleted');
+        client.rm(data);
+        callback(null, null);
+        return;
+      }
+
+      var reactions = body.message.reactions;
       if (!reactions) {
         callback(null, data);
         return;
