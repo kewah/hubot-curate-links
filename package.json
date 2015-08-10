@@ -1,6 +1,6 @@
 {
   "name": "hubot-curate-links",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A hubot script for Slack that saves links that are shared",
   "keywords": [
     "hubot",
