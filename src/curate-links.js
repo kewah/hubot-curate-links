@@ -83,7 +83,7 @@ module.exports = function(robot) {
         if (WARN_DUPLICATE_URL) {
           res.send(
             'Oops <@' + res.message.user.name + '>, '
-            + ' this link has already been shared.\n'
+            + 'this link has already been shared.\n'
             + ':point_right: by <@' + savedData.userName + '> '
             + 'on <#' + savedData.channelName + '> '
             + moment(savedData.datetime).fromNow() + '.\n'
